@@ -3,7 +3,7 @@ name = "manim-math-video-starter"
 version = "0.1.0"
 description = "Teaching-focused starter repository for Manim Community math videos."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
   "manim>=0.19,<0.20",
 ]
