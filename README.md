@@ -1,56 +1,88 @@
 # Manim Math Video Repo Starter
 
-This repository is the control layer for a Manim Community math-video project.
-It is intentionally light at the start: the first goal is to give Codex clear instructions so it can build the project structure safely and consistently.
+This repository is a clean starter project for creating teaching-focused mathematics videos with Manim Community.
 
-## Purpose
+## Project structure
 
-Use this repository to:
-- generate animated math videos with Manim Community;
-- keep scenes, assets, and output organized;
-- make the environment reproducible;
-- support an AI coding agent workflow through Codex.
+- `scenes/` contains source scenes.
+- `assets/` contains reusable images, audio, and data.
+- `media/` contains generated output files and is ignored by Git.
+- `docs/` contains setup, workflow, and style guidance.
+- `scripts/` contains helper commands for preview and final renders.
 
-## What Codex should do first
+## Environment setup
 
-1. Read `AGENTS.md` and all files in `docs/`.
-2. Create the project layout described in `docs/REPO_LAYOUT.md`.
-3. Create a working Python environment configuration using either:
-   - `uv` as the preferred modern path; or
-   - `venv` + `pip` as a compatible fallback.
-4. Add the project files described in `docs/INITIAL_FILES.md`.
-5. Create one minimal working Manim scene in `scenes/lesson_001_intro.py`.
-6. Provide exact commands for local setup, preview rendering, and final rendering.
-7. Do not generate many lessons before the first scene renders successfully.
+### Preferred: `uv`
 
-## Tooling expectations
+#### macOS/Linux
 
-The repository should target Manim Community.
-Use a local isolated Python environment.
-Assume LaTeX-based math rendering is desired for final videos.
-Assume GitHub will be the source of truth.
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
+```
 
-## Local setup goals
+#### Windows PowerShell
 
-The generated repo should support:
-- local development in VS Code;
-- rendering from the command line;
-- low-quality preview renders for iteration;
-- high-quality final renders;
-- simple asset management;
-- consistent naming and organization.
+```powershell
+uv venv
+.\.venv\Scripts\Activate.ps1
+uv pip install -r requirements.txt
+```
 
-## Output philosophy
+### Fallback: `venv` + `pip`
 
-Optimize for clarity, reusability, and small tested changes.
-Prefer one scene class per file unless there is a strong reason otherwise.
+#### macOS/Linux
 
-## Definition of done for initial setup
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
 
-The initial setup is complete when all of the following are true:
-- the repository structure exists;
-- dependencies are declared;
-- a minimal scene renders successfully;
-- README instructions are accurate;
-- `.gitignore` excludes generated media and local environments;
-- commands for preview and final render are documented.
+#### Windows PowerShell
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+## Render the sample scene
+
+### Preview render
+
+```bash
+manim -pql scenes/lesson_001_intro.py Lesson001Intro
+```
+
+### Final render
+
+```bash
+manim -pqh scenes/lesson_001_intro.py Lesson001Intro
+```
+
+Helper scripts are also available:
+
+- macOS/Linux: `./scripts/render_preview.sh` and `./scripts/render_final.sh`
+- Windows PowerShell: `./scripts/render_preview.ps1` and `./scripts/render_final.ps1`
+
+## Output location
+
+Generated files are written under `media/`, following the paths configured in `manim.cfg`.
+
+## Adding future lessons
+
+- Add one scene file at a time to `scenes/`.
+- Prefer filenames such as `lesson_002_limits.py`.
+- Keep one primary scene class per file.
+- Preview before creating final renders.
+
+## Local machine requirements
+
+Manim requires local system tools beyond Python packages. In particular:
+
+- FFmpeg should be installed for video rendering.
+- A LaTeX distribution may be needed for full mathematical text rendering.

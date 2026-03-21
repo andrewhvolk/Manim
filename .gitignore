@@ -1,0 +1,22 @@
+# Python environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Manim output
+media/
+
+# Editor settings
+.vscode/*.log
+.DS_Store
+Thumbs.db
