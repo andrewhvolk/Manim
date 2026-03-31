@@ -20,6 +20,7 @@ This repository is a clean starter project for creating teaching-focused mathema
 uv venv
 source .venv/bin/activate
 uv pip install -r requirements.txt
+uv pip install -r requirements-dev.txt
 ```
 
 #### Windows PowerShell
@@ -28,6 +29,7 @@ uv pip install -r requirements.txt
 uv venv
 .\.venv\Scripts\Activate.ps1
 uv pip install -r requirements.txt
+uv pip install -r requirements-dev.txt
 ```
 
 ### Fallback: `venv` + `pip`
@@ -39,6 +41,7 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt
 ```
 
 #### Windows PowerShell
@@ -48,7 +51,28 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt
 ```
+
+## Codex container setup
+
+For OpenAI Codex, use the following configuration when rendering Manim scenes in a container:
+
+- **Container image:** `universal`
+- **Container caching:** `On`
+- **Setup script:** `Manual`
+- **Agent internet access:** `On` during setup
+
+Recommended setup commands:
+
+```bash
+apt-get update
+apt-get install -y ffmpeg pkg-config libcairo2-dev libpango1.0-dev texlive texlive-latex-extra texlive-fonts-recommended texlive-plain-generic dvisvgm
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+The same commands are also recorded in `docs/CODEX_SETUP.md` and `scripts/setup_codex.txt`.
 
 ## Render the sample scene
 
@@ -86,3 +110,12 @@ Manim requires local system tools beyond Python packages. In particular:
 
 - FFmpeg should be installed for video rendering.
 - A LaTeX distribution may be needed for full mathematical text rendering.
+
+## Project metadata
+
+This repository includes a lightweight `pyproject.toml` for project metadata and development tooling. For local workflows, either of the following is reasonable:
+
+- `pip install -r requirements.txt`
+- `pip install -r requirements-dev.txt`
+- `uv pip install -r requirements.txt`
+- `uv pip install -r requirements-dev.txt`
