@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "manim-math-video-starter"
 version = "0.1.0"
@@ -8,5 +12,17 @@ dependencies = [
   "manim>=0.19,<0.20",
 ]
 
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<9",
+  "ruff>=0.6,<1",
+]
+
 [tool.uv]
-dev-dependencies = []
+dev-dependencies = [
+  "pytest>=8,<9",
+  "ruff>=0.6,<1",
+]
+
+[tool.ruff]
+line-length = 100
