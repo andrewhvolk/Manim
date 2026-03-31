@@ -1,0 +1,4 @@
+apt-get update
+apt-get install -y ffmpeg pkg-config libcairo2-dev libpango1.0-dev texlive texlive-latex-extra texlive-fonts-recommended texlive-plain-generic dvisvgm
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
