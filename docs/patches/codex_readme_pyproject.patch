@@ -1,0 +1,98 @@
+--- a/README.md
++++ b/README.md
+@@ -20,6 +20,7 @@
+ uv venv
+ source .venv/bin/activate
+ uv pip install -r requirements.txt
++uv pip install -r requirements-dev.txt
+ ```
+ 
+ #### Windows PowerShell
+@@ -28,6 +29,7 @@
+ uv venv
+ .\.venv\Scripts\Activate.ps1
+ uv pip install -r requirements.txt
++uv pip install -r requirements-dev.txt
+ ```
+ 
+ ### Fallback: `venv` + `pip`
+@@ -39,6 +41,7 @@
+ source .venv/bin/activate
+ python -m pip install --upgrade pip
+ python -m pip install -r requirements.txt
++python -m pip install -r requirements-dev.txt
+ ```
+ 
+ #### Windows PowerShell
+@@ -48,7 +51,28 @@
+ .\.venv\Scripts\Activate.ps1
+ python -m pip install --upgrade pip
+ python -m pip install -r requirements.txt
++python -m pip install -r requirements-dev.txt
+ ```
++
++## Codex container setup
++
++For OpenAI Codex, use the following configuration when rendering Manim scenes in a container:
++
++- **Container image:** `universal`
++- **Container caching:** `On`
++- **Setup script:** `Manual`
++- **Agent internet access:** `On` during setup
++
++Recommended setup commands:
++
++```bash
++apt-get update
++apt-get install -y ffmpeg pkg-config libcairo2-dev libpango1.0-dev texlive texlive-latex-extra texlive-fonts-recommended texlive-plain-generic dvisvgm
++python -m pip install --upgrade pip
++python -m pip install -r requirements.txt
++```
++
++The same commands are also recorded in `docs/CODEX_SETUP.md` and `scripts/setup_codex.txt`.
+ 
+ ## Render the sample scene
+ 
+@@ -86,3 +110,12 @@
+ 
+ - FFmpeg should be installed for video rendering.
+ - A LaTeX distribution may be needed for full mathematical text rendering.
++
++## Project metadata
++
++This repository includes a lightweight `pyproject.toml` for project metadata and development tooling. For local workflows, either of the following is reasonable:
++
++- `pip install -r requirements.txt`
++- `pip install -r requirements-dev.txt`
++- `uv pip install -r requirements.txt`
++- `uv pip install -r requirements-dev.txt`
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,3 +1,7 @@
++[build-system]
++requires = ["setuptools>=69", "wheel"]
++build-backend = "setuptools.build_meta"
++
+ [project]
+ name = "manim-math-video-starter"
+ version = "0.1.0"
+@@ -8,5 +12,17 @@
+   "manim>=0.19,<0.20",
+ ]
+ 
++[project.optional-dependencies]
++dev = [
++  "pytest>=8,<9",
++  "ruff>=0.6,<1",
++]
++
+ [tool.uv]
+-dev-dependencies = []
++dev-dependencies = [
++  "pytest>=8,<9",
++  "ruff>=0.6,<1",
++]
++
++[tool.ruff]
++line-length = 100
