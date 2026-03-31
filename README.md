@@ -1,121 +1,168 @@
 # Manim Math Video Repo Starter
 
-This repository is a clean starter project for creating teaching-focused mathematics videos with Manim Community.
+This repository is a starter project for creating teaching-focused mathematics videos with Manim Community.
 
 ## Project structure
 
-- `scenes/` contains source scenes.
-- `assets/` contains reusable images, audio, and data.
-- `media/` contains generated output files and is ignored by Git.
-- `docs/` contains setup, workflow, and style guidance.
-- `scripts/` contains helper commands for preview and final renders.
+- `scenes/` contains source scenes
+- `assets/` contains reusable images, audio, and data
+- `media/` contains generated output files
+- `docs/` contains setup, workflow, and reference documentation
+- `scripts/` contains helper scripts for setup and rendering
 
-## Environment setup
+## Recommended documentation
 
-### Preferred: `uv`
+Use these files as the current source of truth:
 
-#### macOS/Linux
+- `docs/SETUP_AND_WORKFLOW.md` for the main working guide
+- `docs/CODEX_SETUP.md` for Codex container setup
+- `scripts/setup_windows_safe.ps1` for first-time Windows setup
+- `scripts/render_preview_safe.ps1` for preview renders on Windows PowerShell
+- `scripts/render_final_safe.ps1` for final renders on Windows PowerShell
 
-```bash
-uv venv
-source .venv/bin/activate
-uv pip install -r requirements.txt
-uv pip install -r requirements-dev.txt
-```
+## First-time setup on Windows PowerShell
 
-#### Windows PowerShell
-
-```powershell
-uv venv
-.\.venv\Scripts\Activate.ps1
-uv pip install -r requirements.txt
-uv pip install -r requirements-dev.txt
-```
-
-### Fallback: `venv` + `pip`
-
-#### macOS/Linux
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python -m pip install -r requirements-dev.txt
-```
-
-#### Windows PowerShell
+From the repository root, run:
 
 ```powershell
-python -m venv .venv
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\setup_windows_safe.ps1
+```
+
+This script is intended to:
+
+- install Python, FFmpeg, and MiKTeX with winget
+- create `.venv` if needed
+- activate the virtual environment
+- install `requirements.txt`
+- install `requirements-dev.txt` when present
+- verify that Manim is installed correctly
+
+## Daily local workflow
+
+For normal work, you usually do not need to rerun full setup.
+
+Open PowerShell in the repository root and run:
+
+```powershell
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python -m pip install -r requirements-dev.txt
 ```
 
-## Codex container setup
+Then use one of the helper scripts:
 
-For OpenAI Codex, use the following configuration when rendering Manim scenes in a container:
+Preview render:
 
-- **Container image:** `universal`
-- **Container caching:** `On`
-- **Setup script:** `Manual`
-- **Agent internet access:** `On` during setup
+```powershell
+.\scripts\render_preview_safe.ps1
+```
 
-Recommended setup commands:
+Final-quality render:
+
+```powershell
+.\scripts\render_final_safe.ps1
+```
+
+You can also render a different scene by passing parameters:
+
+```powershell
+.\scripts\render_preview_safe.ps1 -SceneFile "scenes\lesson_002_limits.py" -SceneClass "Lesson002Limits"
+.\scripts\render_final_safe.ps1 -SceneFile "scenes\lesson_002_limits.py" -SceneClass "Lesson002Limits"
+```
+
+## Manual render commands
+
+Preview render:
 
 ```bash
-apt-get update
-apt-get install -y ffmpeg pkg-config libcairo2-dev libpango1.0-dev texlive texlive-latex-extra texlive-fonts-recommended texlive-plain-generic dvisvgm
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+python -m manim -pql scenes/lesson_001_intro.py Lesson001Intro
 ```
 
-The same commands are also recorded in `docs/CODEX_SETUP.md` and `scripts/setup_codex.txt`.
-
-## Render the sample scene
-
-### Preview render
+Final-quality render:
 
 ```bash
-manim -pql scenes/lesson_001_intro.py Lesson001Intro
+python -m manim -pqh scenes/lesson_001_intro.py Lesson001Intro
 ```
 
-### Final render
+General pattern for future lessons:
 
 ```bash
-manim -pqh scenes/lesson_001_intro.py Lesson001Intro
+python -m manim -pql scenes/lesson_002_limits.py Lesson002Limits
+python -m manim -pqh scenes/lesson_002_limits.py Lesson002Limits
 ```
 
-Helper scripts are also available:
+## Scene authoring conventions
 
-- macOS/Linux: `./scripts/render_preview.sh` and `./scripts/render_final.sh`
-- Windows PowerShell: `./scripts/render_preview.ps1` and `./scripts/render_final.ps1`
+- store scene source files in `scenes/`
+- prefer one primary scene class per file
+- use filenames such as `lesson_002_limits.py`
+- use matching class names such as `Lesson002Limits`
+- preview before final render
 
 ## Output location
 
 Generated files are written under `media/`, following the paths configured in `manim.cfg`.
 
-## Adding future lessons
+Recommended practice:
 
-- Add one scene file at a time to `scenes/`.
-- Prefer filenames such as `lesson_002_limits.py`.
-- Keep one primary scene class per file.
-- Preview before creating final renders.
+- keep source files in Git
+- treat `media/` as generated output
+- commit rendered videos only when you intentionally want to preserve a milestone artifact
 
-## Local machine requirements
+## Refreshing Python packages
 
-Manim requires local system tools beyond Python packages. In particular:
+If you need to reinstall Python dependencies without rerunning full machine setup:
 
-- FFmpeg should be installed for video rendering.
-- A LaTeX distribution may be needed for full mathematical text rendering.
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m pip install --no-cache-dir -r requirements.txt
+python -m pip install --no-cache-dir -r requirements-dev.txt
+```
 
-## Project metadata
+## When to rerun setup
 
-This repository includes a lightweight `pyproject.toml` for project metadata and development tooling. For local workflows, either of the following is reasonable:
+Rerun `scripts/setup_windows_safe.ps1` only when:
 
-- `pip install -r requirements.txt`
-- `pip install -r requirements-dev.txt`
-- `uv pip install -r requirements.txt`
-- `uv pip install -r requirements-dev.txt`
+- setting up a new machine
+- rebuilding `.venv`
+- repairing a broken Python environment
+- reinstalling or repairing system dependencies such as FFmpeg or MiKTeX
+
+For ordinary work, activating `.venv` is enough.
+
+## Codex container setup
+
+For OpenAI Codex container usage, see:
+
+- `docs/CODEX_SETUP.md`
+
+That document covers the recommended container image, manual setup script, and render workflow inside Codex.
+
+## Requirements
+
+Python dependencies are managed through:
+
+- `requirements.txt`
+- `requirements-dev.txt`
+
+System tools commonly needed for full Manim workflows include:
+
+- FFmpeg
+- a LaTeX distribution such as MiKTeX
+
+## Troubleshooting
+
+### No module named manim
+
+Activate `.venv` and reinstall the repository requirements.
+
+### pip cache permission errors
+
+Use `--no-cache-dir` installs. The safe Windows setup script already does this.
+
+### PowerShell cannot find Activate.ps1
+
+The virtual environment has not been created yet. Run `.\scripts\setup_windows_safe.ps1` first.
+
+### MathTex or LaTeX-related problems
+
+Confirm MiKTeX is installed and allow it to install missing packages on first use.
