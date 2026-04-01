@@ -1,6 +1,6 @@
 from manim import Scene
 
-from style.scene_factory import VideoSpec, build_standard_scene
+from style.scene_factory import VideoSpec, build_step_by_step_scene
 
 
 class V02CoterminalAnglesRadians(Scene):
@@ -29,4 +29,4 @@ class V02CoterminalAnglesRadians(Scene):
                 "Check equivalent terminal side.",
             ],
         )
-        build_standard_scene(self, spec)
+        build_step_by_step_scene(self, spec)
