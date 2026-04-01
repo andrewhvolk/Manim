@@ -137,6 +137,21 @@ For OpenAI Codex container usage, see:
 
 That document covers the recommended container image, manual setup script, and render workflow inside Codex.
 
+## Week 1 task checklist (Windows 11)
+
+If your machine and requirements are already set up, use:
+
+- `docs/WEEK1_TASKS_WINDOWS.md`
+
+This gives a practical day-by-day checklist to complete the first week of repository tasks.
+
+## 28-video production and YouTube workflow
+
+For full multi-video tracking, iterative QA, voiceover, branding, and upload prep, use:
+
+- `docs/YOUTUBE_PRODUCTION_WORKFLOW_28.md`
+- `assets/data/production/math130_test3_tracker.csv`
+
 ## Requirements
 
 Python dependencies are managed through:
