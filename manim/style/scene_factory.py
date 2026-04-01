@@ -40,9 +40,13 @@ SLOW = 1.6
 def build_standard_scene(scene: Scene, spec: VideoSpec) -> None:
     set_gradient_background(scene)
 
-    title = make_title(f"{spec.code}: {spec.topic}").to_edge(UP)
+    title = make_title(f"{spec.code}: {spec.topic}")
+    scene.play(Write(title), run_time=SLOW)
+    scene.wait(2.8)
+
+    scene.play(title.animate.scale(0.88).to_edge(UP), run_time=STANDARD)
     objective = Text(f"Objective: {spec.objective}", color=TEXT_PRIMARY, font_size=30).next_to(title, DOWN, buff=0.35)
-    scene.play(Write(title), FadeIn(objective, shift=0.2 * DOWN), run_time=SLOW)
+    scene.play(FadeIn(objective, shift=0.2 * DOWN), run_time=STANDARD)
     scene.wait(0.45)
 
     formula_label = make_step_label("Concept / Formula").to_edge(LEFT).shift(UP * 1.7)
