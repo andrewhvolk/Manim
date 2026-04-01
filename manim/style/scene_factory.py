@@ -42,7 +42,35 @@ def build_standard_scene(scene: Scene, spec: VideoSpec) -> None:
 
     title = make_title(f"{spec.code}: {spec.topic}")
     scene.play(Write(title), run_time=SLOW)
-    scene.wait(1.8)
+    scene.wait(2.8)
+
+    scene.play(title.animate.scale(0.88).to_edge(UP), run_time=STANDARD)
+    objective = Text(f"Objective: {spec.objective}", color=TEXT_PRIMARY, font_size=30).next_to(title, DOWN, buff=0.35)
+    scene.play(FadeIn(objective, shift=0.2 * DOWN), run_time=STANDARD)
+    scene.wait(0.45)
+
+    formula_label = make_step_label("Concept / Formula").to_edge(LEFT).shift(UP * 1.7)
+    formula_box = make_formula_box(spec.formula).next_to(formula_label, DOWN, aligned_edge=LEFT, buff=0.35)
+    scene.play(FadeIn(formula_label), Write(formula_box), run_time=SLOW)
+    scene.wait(0.45)
+
+    ex_label = make_step_label("Worked Examples A–C").to_edge(LEFT).shift(UP * 0.15)
+    example_lines = VGroup(
+        *[
+            Text(f"Example {chr(65 + i)}: {line}", color=PRIMARY, font_size=28)
+            for i, line in enumerate(spec.examples)
+        ]
+    ).arrange(DOWN, aligned_edge=LEFT, buff=0.26)
+    example_lines.next_to(ex_label, DOWN, aligned_edge=LEFT, buff=0.28)
+
+    scene.play(FadeIn(ex_label), run_time=STANDARD)
+    for line in example_lines:
+        scene.play(Write(line), run_time=STANDARD)
+
+    mistake_header = make_step_label("Common Mistake").to_edge(RIGHT).shift(UP * 0.15)
+    warning = make_warning_badge(spec.mistake).next_to(mistake_header, DOWN, buff=0.3)
+    correction = Text(spec.correction, color=SUCCESS, font_size=26).next_to(warning, DOWN, buff=0.3)
+    red_x = Text("✗", color=ERROR, font_size=72).move_to(warning.get_center() + UP * 0.08)
 
     scene.play(title.animate.scale(0.9).to_edge(UP), run_time=STANDARD)
     objective = Text(f"Objective: {spec.objective}", color=TEXT_PRIMARY, font_size=30).next_to(title, DOWN, buff=0.32)
