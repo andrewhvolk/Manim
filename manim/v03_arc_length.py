@@ -1,6 +1,6 @@
 from manim import Scene
 
-from style.scene_factory import VideoSpec, build_standard_scene
+from style.scene_factory import VideoSpec, build_step_by_step_scene
 
 
 class V03ArcLength(Scene):
@@ -29,4 +29,4 @@ class V03ArcLength(Scene):
                 "Check reasonableness.",
             ],
         )
-        build_standard_scene(self, spec)
+        build_step_by_step_scene(self, spec)
