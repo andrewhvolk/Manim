@@ -62,6 +62,14 @@ Final-quality render:
 .\scripts\render_final_safe.ps1
 ```
 
+Render all 28 `manim/v*.py` videos in one command:
+
+```powershell
+.\scripts\render_all_videos.ps1 -Quality l   # preview
+.\scripts\render_all_videos.ps1 -Quality h   # final
+.\scripts\render_all_videos.ps1 -Quality h -DryRun
+```
+
 You can also render a different scene by passing parameters:
 
 ```powershell

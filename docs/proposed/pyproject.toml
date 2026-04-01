@@ -9,7 +9,7 @@ description = "Teaching-focused starter repository for Manim Community math vide
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-  "manim>=0.19,<0.20",
+  "manim>=0.20,<0.21",
 ]
 
 [project.optional-dependencies]
