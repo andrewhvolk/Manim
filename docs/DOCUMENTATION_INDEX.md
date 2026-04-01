@@ -9,3 +9,5 @@ Use these files as the current documentation set:
 - `scripts/render_final_safe.ps1` for final renders on Windows PowerShell
 
 Older helper files may still exist in the repository, but the files listed above should be treated as the current source of truth.
+- `docs/YOUTUBE_PRODUCTION_WORKFLOW_28.md` for full 28-video production tracking and YouTube packaging
+- `assets/data/production/math130_test3_tracker.csv` as the starter tracker prefilled for V01 to V28
